@@ -1,0 +1,1198 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package juju.pharmacy;
+
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
+import java.sql.*;
+import java.util.Vector;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.*;
+
+/**
+ *
+ * @author user
+ */
+public class purchase extends javax.swing.JPanel {
+
+    /** Creates new form customer */
+    public purchase() {
+        initComponents();
+        AutoCompleteDecorator.decorate(p_supplier);
+        stb_load();
+        sdata_load();
+        ptb_load();
+    }
+    java.util.Date po_date;
+    java.sql.Date pur_date;
+    public void stb_load(){
+        try{
+            DefaultTableModel dt= (DefaultTableModel) jTable1.getModel();
+            dt.setRowCount(0);
+            
+            Statement s=db.mycon().createStatement();
+            ResultSet rs=s.executeQuery("SELECT * FROM supplier");
+            while(rs.next()){
+                Vector v=new Vector();  
+                v.add(rs.getString(1));
+                v.add(rs.getString(2));
+                v.add(rs.getString(3));
+                v.add(rs.getString(4));
+                dt.addRow(v);
+            }
+            s.close();
+            db.mycon().close();
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+    }
+    public void stb_load(String sql){
+        try{
+            DefaultTableModel dt= (DefaultTableModel) jTable1.getModel();
+            dt.setRowCount(0);
+            Statement s=db.mycon().createStatement();
+            ResultSet rs=s.executeQuery(sql);
+            while(rs.next()){
+                Vector v=new Vector();  
+                v.add(rs.getString(1));
+                v.add(rs.getString(2));
+                v.add(rs.getString(3));
+                v.add(rs.getString(4));
+                dt.addRow(v);
+            }
+            s.close();
+            db.mycon().close();
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+    }
+    public void sdata_load(){
+        try{
+            Statement s=db.mycon().createStatement();
+            ResultSet rs=s.executeQuery("SELECT * FROM supplier");
+            Vector v=new Vector(); 
+            while(rs.next()){ 
+                v.add(rs.getString("name"));
+                DefaultComboBoxModel com=new DefaultComboBoxModel(v);
+                p_supplier.setModel(com);
+                p_sid.setText("1");
+            }
+            s.close();
+            db.mycon().close();
+        }catch(Exception e){
+            System.out.println(e);
+        }
+    }
+    public String sup_id(String id){
+        String name="";
+        try{
+            Statement s=db.mycon().createStatement();
+            ResultSet rs=s.executeQuery("SELECT * FROM supplier where id="+id);
+            if(rs.next())
+                name = rs.getString(2);
+            s.close();
+            db.mycon().close();
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        
+        return name;
+    }
+    public void ptb_load(){
+        try{
+            DefaultTableModel dt= (DefaultTableModel) jTable2.getModel();
+            dt.setRowCount(0);
+            
+            Statement s=db.mycon().createStatement();
+            ResultSet rs=s.executeQuery("SELECT * FROM purchase");
+            while(rs.next()){
+                
+                Vector v=new Vector();  
+                v.add(rs.getString(1));
+                v.add(sup_id(rs.getString(2)));
+                v.add(rs.getString(3));
+                v.add(rs.getString(4));
+                v.add(rs.getString(5));
+                v.add(rs.getString(6));
+                dt.addRow(v);
+            }
+            s.close();
+            db.mycon().close();
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+    }
+    public void ptb_load(String sql){
+        try{
+            DefaultTableModel dt= (DefaultTableModel) jTable2.getModel();
+            dt.setRowCount(0);
+            Statement s=db.mycon().createStatement();
+            ResultSet rs=s.executeQuery(sql);
+            while(rs.next()){
+                Vector v=new Vector();  
+                v.add(rs.getString(1));
+                v.add(sup_id(rs.getString(2)));
+                v.add(rs.getString(3));
+                v.add(rs.getString(4));
+                v.add(rs.getString(5));
+                v.add(rs.getString(6));
+                dt.addRow(v);
+            }
+            s.close();
+            db.mycon().close();
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+    }
+
+    /** This method is called from within the constructor to
+     * initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is
+     * always regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        gender_grp = new javax.swing.ButtonGroup();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        s_save = new javax.swing.JButton();
+        s_search = new javax.swing.JButton();
+        s_update = new javax.swing.JButton();
+        s_delete = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        s_contact = new javax.swing.JTextField();
+        s_address = new javax.swing.JTextField();
+        s_name = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        s_id = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        s_clear = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
+        p_save = new javax.swing.JButton();
+        p_search = new javax.swing.JButton();
+        p_update = new javax.swing.JButton();
+        p_delete = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
+        p_po_no = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        p_total = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        p_paid = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
+        p_due = new javax.swing.JTextField();
+        p_supplier = new javax.swing.JComboBox<>();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        p_date = new com.toedter.calendar.JDateChooser();
+        p_sid = new javax.swing.JTextField();
+        p_clear = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+
+        jTabbedPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jTabbedPane1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabel1.setText("Name :");
+
+        jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabel2.setText("Address :");
+
+        s_save.setBackground(new java.awt.Color(255, 255, 255));
+        s_save.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        s_save.setIcon(new javax.swing.ImageIcon(getClass().getResource("/juju/pharmacy/img/saves.png"))); // NOI18N
+        s_save.setText("Save");
+        s_save.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                s_saveActionPerformed(evt);
+            }
+        });
+
+        s_search.setBackground(new java.awt.Color(255, 255, 255));
+        s_search.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        s_search.setIcon(new javax.swing.ImageIcon(getClass().getResource("/juju/pharmacy/img/searchs.jpg"))); // NOI18N
+        s_search.setText("Search");
+        s_search.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                s_searchActionPerformed(evt);
+            }
+        });
+
+        s_update.setBackground(new java.awt.Color(255, 255, 255));
+        s_update.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        s_update.setIcon(new javax.swing.ImageIcon(getClass().getResource("/juju/pharmacy/img/edits.png"))); // NOI18N
+        s_update.setText("Update");
+        s_update.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                s_updateActionPerformed(evt);
+            }
+        });
+
+        s_delete.setBackground(new java.awt.Color(255, 255, 255));
+        s_delete.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        s_delete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/juju/pharmacy/img/deletes.png"))); // NOI18N
+        s_delete.setText("Delete");
+        s_delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                s_deleteActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabel5.setText("Contact no. :");
+
+        s_contact.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        s_contact.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                s_contactActionPerformed(evt);
+            }
+        });
+
+        s_address.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        s_address.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                s_addressActionPerformed(evt);
+            }
+        });
+
+        s_name.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        s_name.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                s_nameActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(71, 71, 71)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(s_save)
+                        .addGap(12, 12, 12)
+                        .addComponent(s_search)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(s_update)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(s_delete)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1))
+                        .addGap(56, 56, 56)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(s_address, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(s_contact, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(s_name, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 189, Short.MAX_VALUE))))))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(s_name, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(49, 49, 49)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(s_address, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(46, 46, 46)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(s_contact, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addGap(98, 98, 98)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(s_save)
+                    .addComponent(s_search)
+                    .addComponent(s_update)
+                    .addComponent(s_delete))
+                .addContainerGap(192, Short.MAX_VALUE))
+        );
+
+        jTable1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jTable1.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Id", "Name", "Address", "Contact"
+            }
+        ));
+        jTable1.setFillsViewportHeight(true);
+        jTable1.setRowHeight(25);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel3.setAutoscrolls(true);
+
+        jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabel3.setText("Suppliers Info :");
+
+        s_id.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+
+        jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabel4.setText("Search Id :");
+
+        s_clear.setBackground(new java.awt.Color(255, 255, 255));
+        s_clear.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        s_clear.setIcon(new javax.swing.ImageIcon(getClass().getResource("/juju/pharmacy/img/clears.png"))); // NOI18N
+        s_clear.setText("Clear");
+        s_clear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                s_clearActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel3))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(86, 86, 86)
+                        .addComponent(jLabel4)
+                        .addGap(56, 56, 56)
+                        .addComponent(s_id, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(50, 50, 50)
+                        .addComponent(s_clear)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(s_id, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4)
+                    .addComponent(s_clear))
+                .addGap(31, 31, 31))
+        );
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 904, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(12, 12, 12))
+        );
+
+        jTabbedPane1.addTab("Supplier", jPanel1);
+
+        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        p_save.setBackground(new java.awt.Color(255, 255, 255));
+        p_save.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        p_save.setIcon(new javax.swing.ImageIcon(getClass().getResource("/juju/pharmacy/img/saves.png"))); // NOI18N
+        p_save.setText("Save");
+        p_save.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                p_saveActionPerformed(evt);
+            }
+        });
+
+        p_search.setBackground(new java.awt.Color(255, 255, 255));
+        p_search.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        p_search.setIcon(new javax.swing.ImageIcon(getClass().getResource("/juju/pharmacy/img/searchs.jpg"))); // NOI18N
+        p_search.setText("Search");
+        p_search.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                p_searchActionPerformed(evt);
+            }
+        });
+
+        p_update.setBackground(new java.awt.Color(255, 255, 255));
+        p_update.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        p_update.setIcon(new javax.swing.ImageIcon(getClass().getResource("/juju/pharmacy/img/edits.png"))); // NOI18N
+        p_update.setText("Update");
+        p_update.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                p_updateActionPerformed(evt);
+            }
+        });
+
+        p_delete.setBackground(new java.awt.Color(255, 255, 255));
+        p_delete.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        p_delete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/juju/pharmacy/img/deletes.png"))); // NOI18N
+        p_delete.setText("Delete");
+        p_delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                p_deleteActionPerformed(evt);
+            }
+        });
+
+        jLabel11.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/juju/pharmacy/img/searchs.jpg"))); // NOI18N
+        jLabel11.setText("PO no.:");
+
+        p_po_no.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+
+        jLabel12.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabel12.setText("Supplier:");
+
+        p_total.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        p_total.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                p_totalActionPerformed(evt);
+            }
+        });
+
+        jLabel13.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabel13.setText("Total :");
+
+        jLabel14.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabel14.setText("Paid:");
+
+        p_paid.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+
+        jLabel15.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabel15.setText("Due:");
+
+        p_due.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        p_due.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                p_dueActionPerformed(evt);
+            }
+        });
+
+        p_supplier.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        p_supplier.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        p_supplier.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                p_supplierItemStateChanged(evt);
+            }
+        });
+        p_supplier.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                p_supplierActionPerformed(evt);
+            }
+        });
+
+        jLabel16.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabel16.setText("Purchase Order Info :");
+
+        jLabel17.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabel17.setText("Date:");
+
+        p_date.setBackground(new java.awt.Color(255, 255, 255));
+        p_date.setDateFormatString("yyyy-MM-dd");
+        p_date.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
+        p_date.setMinSelectableDate(new java.util.Date(-62135786593000L));
+
+        p_sid.setEditable(false);
+        p_sid.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        p_sid.setText("ID");
+
+        p_clear.setBackground(new java.awt.Color(255, 255, 255));
+        p_clear.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        p_clear.setIcon(new javax.swing.ImageIcon(getClass().getResource("/juju/pharmacy/img/clears.png"))); // NOI18N
+        p_clear.setText("Clear");
+        p_clear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                p_clearActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(80, 80, 80)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jLabel11)
+                        .addComponent(jLabel12))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel13)
+                            .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel15, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel17, javax.swing.GroupLayout.Alignment.TRAILING))))
+                .addGap(40, 40, 40)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(p_due)
+                    .addComponent(p_po_no)
+                    .addComponent(p_total)
+                    .addComponent(p_date, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
+                    .addComponent(p_supplier, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(p_paid))
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(p_sid, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(p_clear)
+                        .addContainerGap())))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(43, Short.MAX_VALUE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel16)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(p_save)
+                        .addGap(12, 12, 12)
+                        .addComponent(p_search)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(p_update)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(p_delete)))
+                .addGap(40, 40, 40))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addComponent(jLabel16)
+                .addGap(45, 45, 45)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(p_po_no, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel11)
+                    .addComponent(p_clear))
+                .addGap(45, 45, 45)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(p_supplier, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12)
+                    .addComponent(p_sid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(45, 45, 45)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel13)
+                    .addComponent(p_total, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(45, 45, 45)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(p_paid, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel14))
+                .addGap(45, 45, 45)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(p_due, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel15))
+                .addGap(45, 45, 45)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel17)
+                    .addComponent(p_date, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(51, 51, 51)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(p_save)
+                    .addComponent(p_search)
+                    .addComponent(p_update)
+                    .addComponent(p_delete))
+                .addContainerGap(128, Short.MAX_VALUE))
+        );
+
+        jPanel5Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {p_date, p_paid});
+
+        jPanel5Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {p_sid, p_supplier});
+
+        jTable2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jTable2.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Product Order No.", "Supplier", "Total", "Paid", "Due", "Purchase Date"
+            }
+        ));
+        jTable2.setFillsViewportHeight(true);
+        jTable2.setRowHeight(25);
+        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable2MouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jTable2);
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 992, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2))
+                .addGap(12, 12, 12))
+        );
+
+        jTabbedPane1.addTab("Purchase ", jPanel4);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jTabbedPane1)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jTabbedPane1)
+        );
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void s_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_s_searchActionPerformed
+        // TODO add your handling code here:
+        String sql="SELECT * FROM supplier";
+        String id= s_id.getText();
+        String name= s_name.getText();
+        String address= s_address.getText();
+        String contact= s_contact.getText();
+        int flag=0;
+        if(s_id.getText().isEmpty()){
+            try{
+              if(!s_name.getText().isEmpty()){
+                  if (flag==0){
+                      sql=sql+" where name LIKE'"+name+"%'";
+                      flag=1;
+                  }else{
+                      sql=sql+" OR name LIKE'"+name+"%'";
+                  }     
+              }
+              if(!s_address.getText().isEmpty()){
+                  if (flag==0){
+                      sql=sql+" where address LIKE'"+address+"%'";
+                      flag=1;
+                  }else{
+                      sql=sql+" OR address LIKE'"+address+"%'";
+                  }     
+              }
+              if(!s_contact.getText().isEmpty()){
+                  if (flag==0){
+                      sql=sql+" where contact_no LIKE'"+contact+"%'";
+                      flag=1;
+                  }else{
+                      sql=sql+" OR contact_no LIKE'"+contact+"%'";
+                  }     
+              }
+            }catch(Exception e){
+                 System.out.println(e);
+            } 
+        }else{
+            try{
+                Statement s=db.mycon().createStatement();
+                ResultSet rs=s.executeQuery("SELECT * FROM supplier WHERE id="+id);
+                if(rs.next()){
+                    s_name.setText(rs.getString(2));    
+                    s_address.setText(rs.getString(3));
+                    s_contact.setText(rs.getString(4));
+                    sql=sql+" where id="+id;
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Id not found");
+                    s_name.setText("");
+                    s_address.setText("");
+                    s_contact.setText("");
+                }
+                 s.close();
+                 db.mycon().close();
+            }catch(Exception e){
+                 System.out.println(e);
+            }  
+        }
+        stb_load(sql);
+    }//GEN-LAST:event_s_searchActionPerformed
+
+    private void s_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_s_updateActionPerformed
+        // TODO add your handling code here:
+        String id= s_id.getText();
+        String name= s_name.getText();
+        String address= s_address.getText();
+        String contact= s_contact.getText();
+        if(s_id.getText().isEmpty()||s_name.getText().isEmpty()||s_address.getText().isEmpty()||s_contact.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Missing Information");
+        }else{
+           try{
+              Statement s=db.mycon().createStatement();
+              int result=s.executeUpdate("UPDATE supplier SET name='"+name+"',address='"+address+"',contact_no='"+contact+"' WHERE id="+id);
+              if(result>0){
+                     JOptionPane.showMessageDialog(null, "Supplier updated successfully");
+              }else{
+                  if(result==0)   
+                    JOptionPane.showMessageDialog(null, "Id not found");
+                  else
+                      JOptionPane.showMessageDialog(null, "Error occured");
+                 }
+              s.close();
+              db.mycon().close();
+          }catch(Exception e){
+              if(contact.length()>10)
+                JOptionPane.showMessageDialog(null,"Contact should not be more than 10 digits");
+               System.out.println(e);
+          }  
+        }
+        stb_load(); 
+    }//GEN-LAST:event_s_updateActionPerformed
+
+    private void s_contactActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_s_contactActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_s_contactActionPerformed
+
+    private void s_addressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_s_addressActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_s_addressActionPerformed
+
+    private void s_nameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_s_nameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_s_nameActionPerformed
+
+    private void p_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_p_searchActionPerformed
+        // TODO add your handling code here:
+        String sql="SELECT * FROM purchase";
+        String po_no=p_po_no.getText();
+        String total= p_total.getText();
+        String paid= p_paid.getText();
+        String due= p_due.getText();
+        String sup_id= p_sid.getText();
+        try{
+            po_date=p_date.getDate();
+            pur_date= new java.sql.Date(po_date.getTime());
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        int flag=0;
+        if(p_po_no.getText().isEmpty()){
+            try{
+              if(!p_total.getText().isEmpty()){
+                  if (flag==0){
+                      sql=sql+" where total>="+total;
+                      flag=1;
+                  }else{
+                      sql=sql+" OR total>="+total;
+                  }     
+              }
+              if(!p_paid.getText().isEmpty()){
+                  if (flag==0){
+                      sql=sql+" where pay>="+paid;
+                      flag=1;
+                  }else{
+                      sql=sql+" OR pay>="+paid;
+                  }     
+              }
+              if(!p_due.getText().isEmpty()){
+                  if (flag==0){
+                      sql=sql+" where due>="+due;
+                      flag=1;
+                  }else{
+                      sql=sql+" OR due>="+due;
+                  }     
+              }
+              if(pur_date!=null){
+                  if (flag==0){
+                      sql=sql+" where date>='"+pur_date+"'";
+                      flag=1;
+                  }else{
+                      sql=sql+" OR date>='"+pur_date+"'";
+                  }     
+              }
+              if(!p_sid.getText().isEmpty()){
+                  if (flag==0){
+                      sql=sql+" where supplier_id ="+sup_id;
+                      flag=1;
+                  }else{
+                      Object[] options = {"All","Filter","Exclude"};
+                      int dialogResult=JOptionPane.showOptionDialog(null, "Do you want to filter by selected supplier?","Filter",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null,options,options[0]);
+                      if(dialogResult==JOptionPane.YES_OPTION)
+                        sql=sql+" OR supplier_id ="+sup_id;
+                      else if(dialogResult==JOptionPane.NO_OPTION)
+                        sql=sql+" AND supplier_id ="+sup_id;
+                  }   
+              }
+            }catch(Exception e){
+                 System.out.println(e);
+            } 
+        }else{
+            try{
+                Statement s=db.mycon().createStatement();
+                ResultSet rs=s.executeQuery("SELECT * FROM purchase WHERE PO_no="+po_no);
+                if(rs.next()){
+                    p_supplier.setSelectedItem(rs.getString(2));
+                    p_total.setText(rs.getString(3));
+                    p_paid.setText(rs.getString(4));
+                    p_due.setText(rs.getString(5));
+                    ((JTextField)p_date.getDateEditor().getUiComponent()).setText(rs.getString(6));
+                    sql=sql+" where PO_no="+po_no;
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Po_no not found");
+                    p_supplier.setSelectedIndex(0);
+                    p_total.setText("");
+                    p_paid.setText("");
+                    p_due.setText("");
+                    ((JTextField)p_date.getDateEditor().getUiComponent()).setText("");
+                }
+                 s.close();
+                 db.mycon().close();
+            }catch(Exception e){
+                 System.out.println(e);
+            }  
+        }
+        ptb_load(sql);
+    }//GEN-LAST:event_p_searchActionPerformed
+
+    private void p_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_p_updateActionPerformed
+        // TODO add your handling code here:
+        String po_no=p_po_no.getText();
+        String total= p_total.getText();
+        String paid= p_paid.getText();
+        String due= p_due.getText();
+        String sup_id= p_sid.getText();
+        try{
+            po_date=p_date.getDate();
+            pur_date= new java.sql.Date(po_date.getTime());
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        if(p_total.getText().isEmpty()||p_po_no.getText().isEmpty()||p_paid.getText().isEmpty()||p_due.getText().isEmpty()||p_sid.getText().isEmpty()||pur_date==null){
+            JOptionPane.showMessageDialog(null, "Missing Information");
+        }else{
+           try{
+              Statement s=db.mycon().createStatement();
+              int result=s.executeUpdate("UPDATE purchase SET supplier_id="+sup_id+",total="+total+",pay="+paid+",due="+due+",date='"+pur_date+"' WHERE PO_no="+po_no);
+              if(result>0){
+                     JOptionPane.showMessageDialog(null, "Purchase order updated successfully");
+              }else{
+                  if(result==0)   
+                    JOptionPane.showMessageDialog(null, "Po_no not found");
+                  else
+                      JOptionPane.showMessageDialog(null, "Error occured");
+                 }
+              s.close();
+              db.mycon().close();
+          }catch(Exception e){
+               System.out.println(e);
+          }  
+        }
+        ptb_load(); 
+    }//GEN-LAST:event_p_updateActionPerformed
+
+    private void p_supplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_p_supplierActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_p_supplierActionPerformed
+
+    private void p_totalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_p_totalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_p_totalActionPerformed
+
+    private void p_dueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_p_dueActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_p_dueActionPerformed
+
+    private void s_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_s_saveActionPerformed
+        // TODO add your handling code here:
+        String name= s_name.getText();
+        String address= s_address.getText();
+        String contact= s_contact.getText();
+        if(s_name.getText().isEmpty()||s_address.getText().isEmpty()||s_contact.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Missing Information");
+        }else{
+            try{
+                Statement s=db.mycon().createStatement();
+                int result=s.executeUpdate("INSERT INTO supplier (name,address,contact_no) VALUES('"+name+"','"+address+"','"+contact+"')");
+                if(result!=-1){
+                       JOptionPane.showMessageDialog(null, "Supplier added successfully");
+                       stb_load();
+                }else{
+                       JOptionPane.showMessageDialog(null, "Error occured");
+                   }
+                s.close();
+                db.mycon().close();
+            }catch(Exception e){
+                if(contact.length()>10)
+                    JOptionPane.showMessageDialog(null,"Contact should not be more than 10 digits");
+                System.out.println(e);
+            }
+        }
+    }//GEN-LAST:event_s_saveActionPerformed
+
+    private void s_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_s_deleteActionPerformed
+        // TODO add your handling code here:
+        String id= s_id.getText();
+        int dialogResult=JOptionPane.showConfirmDialog(null,"Do you want to delete record of id="+id,"Confirmation",JOptionPane.YES_NO_OPTION );
+        if(!s_id.getText().isEmpty()&& dialogResult==JOptionPane.YES_OPTION){
+            try{
+              Statement s=db.mycon().createStatement();
+              int result=s.executeUpdate("DELETE FROM supplier where id="+id);
+              if(result>0){
+                     JOptionPane.showMessageDialog(null, "Supplier Deleted successfully");
+              }else{
+                  if(result==0)   
+                    JOptionPane.showMessageDialog(null, "Id not found");
+                  
+                  else
+                      JOptionPane.showMessageDialog(null, "Error occured");
+                 }
+               s.close();
+               db.mycon().close();
+            }catch(Exception e){
+                 System.out.println(e);
+                 JOptionPane.showMessageDialog(null, "This supplier data may be link with other data");
+            }  
+        }
+        stb_load();
+        
+    }//GEN-LAST:event_s_deleteActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        int r= jTable1.getSelectedRow();
+        String id=jTable1.getValueAt(r, 0).toString();
+        String name= jTable1.getValueAt(r, 1).toString();
+        String address= jTable1.getValueAt(r, 2).toString();
+        String contact= jTable1.getValueAt(r, 3).toString();
+        s_id.setText(id);
+        s_name.setText(name);    
+        s_address.setText(address);
+        s_contact.setText(contact);
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void s_clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_s_clearActionPerformed
+        // TODO add your handling code here:
+        s_id.setText("");
+        s_name.setText("");
+        s_address.setText("");
+        s_contact.setText("");
+        stb_load();
+    }//GEN-LAST:event_s_clearActionPerformed
+
+    private void p_supplierItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_p_supplierItemStateChanged
+        // TODO add your handling code here:
+         try{
+            Statement s=db.mycon().createStatement();
+            ResultSet rs=s.executeQuery("SELECT id FROM supplier where name='"+p_supplier.getSelectedItem()+"'");
+            while(rs.next()){ 
+                p_sid.setText(rs.getString("id"));
+            }
+            s.close();
+            db.mycon().close();
+        }catch(Exception e){
+            System.out.println(e);
+        }
+    }//GEN-LAST:event_p_supplierItemStateChanged
+
+    private void p_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_p_saveActionPerformed
+        // TODO add your handling code here:
+        String total= p_total.getText();
+        String paid= p_paid.getText();
+        String due= p_due.getText();
+        String sup_id= p_sid.getText();
+        try{
+            po_date=p_date.getDate();
+            pur_date= new java.sql.Date(po_date.getTime());
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        
+        if(p_total.getText().isEmpty()||p_paid.getText().isEmpty()||p_due.getText().isEmpty()||p_sid.getText().isEmpty()||pur_date==null){
+            JOptionPane.showMessageDialog(null, "Missing Information");
+        }else{
+            try{
+                Statement s=db.mycon().createStatement();
+                int result=s.executeUpdate("INSERT INTO purchase (supplier_id,total,pay,due,date) VALUES("+sup_id+","+total+","+paid+","+due+",'"+pur_date+"')");
+                if(result!=-1){
+                       JOptionPane.showMessageDialog(null, "Purchase order added successfully");
+                       ptb_load();
+                }else{
+                       JOptionPane.showMessageDialog(null, "Error occured");
+                   }
+                s.close();
+                db.mycon().close();
+            }catch(Exception e){
+                System.out.println(e);
+            }
+        }
+    }//GEN-LAST:event_p_saveActionPerformed
+
+    private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
+        // TODO add your handling code here:
+        int r= jTable2.getSelectedRow();
+        String po=jTable2.getValueAt(r, 0).toString();
+        String name= jTable2.getValueAt(r, 1).toString();
+        String total= jTable2.getValueAt(r, 2).toString();
+        String paid= jTable2.getValueAt(r, 3).toString();
+        String due= jTable2.getValueAt(r, 4).toString();
+        String date= jTable2.getValueAt(r, 5).toString();
+        p_po_no.setText(po);
+        p_supplier.setSelectedItem(name);
+        p_total.setText(total);
+        p_paid.setText(paid);
+        p_due.setText(due);
+        ((JTextField)p_date.getDateEditor().getUiComponent()).setText(date);
+        
+    }//GEN-LAST:event_jTable2MouseClicked
+
+    private void p_clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_p_clearActionPerformed
+        // TODO add your handling code here:
+        p_po_no.setText("");
+        p_supplier.setSelectedIndex(0);
+        p_total.setText("");
+        p_paid.setText("");
+        p_due.setText("");
+        ((JTextField)p_date.getDateEditor().getUiComponent()).setText("");
+        ptb_load();
+    }//GEN-LAST:event_p_clearActionPerformed
+
+    private void p_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_p_deleteActionPerformed
+        // TODO add your handling code here:
+        String po_no=p_po_no.getText();
+        int dialogResult=JOptionPane.showConfirmDialog(null,"Do you want to delete record of Purchase Order no="+po_no,"Confirmation",JOptionPane.YES_NO_OPTION );
+        if(!p_po_no.getText().isEmpty()&& dialogResult==JOptionPane.YES_OPTION){
+            try{
+              Statement s=db.mycon().createStatement();
+              int result=s.executeUpdate("DELETE FROM purchase where PO_no="+po_no);
+              if(result>0){
+                     JOptionPane.showMessageDialog(null, "Purchase order Deleted successfully");
+              }else{
+                  if(result==0)   
+                    JOptionPane.showMessageDialog(null, "Po_no not found");
+                  
+                  else
+                      JOptionPane.showMessageDialog(null, "Error occured");
+                 }
+               s.close();
+               db.mycon().close();
+            }catch(Exception e){
+                 System.out.println(e);
+                 
+            }  
+        }
+        ptb_load();
+    }//GEN-LAST:event_p_deleteActionPerformed
+
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup gender_grp;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
+    private javax.swing.JButton p_clear;
+    private com.toedter.calendar.JDateChooser p_date;
+    private javax.swing.JButton p_delete;
+    private javax.swing.JTextField p_due;
+    private javax.swing.JTextField p_paid;
+    private javax.swing.JTextField p_po_no;
+    private javax.swing.JButton p_save;
+    private javax.swing.JButton p_search;
+    private javax.swing.JTextField p_sid;
+    private javax.swing.JComboBox<String> p_supplier;
+    private javax.swing.JTextField p_total;
+    private javax.swing.JButton p_update;
+    private javax.swing.JTextField s_address;
+    private javax.swing.JButton s_clear;
+    private javax.swing.JTextField s_contact;
+    private javax.swing.JButton s_delete;
+    private javax.swing.JTextField s_id;
+    private javax.swing.JTextField s_name;
+    private javax.swing.JButton s_save;
+    private javax.swing.JButton s_search;
+    private javax.swing.JButton s_update;
+    // End of variables declaration//GEN-END:variables
+
+}
